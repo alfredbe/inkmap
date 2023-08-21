@@ -202,6 +202,7 @@ export function getWMSParams(layerSpec) {
  * @return {import('rxjs').Observable<LayerPrintStatus>}
  */
 function createLayerWMS(jobId, layerSpec, rootFrameState) {
+  let { projection } = layerSpec;
   if (layerSpec.tiled) {
     return createTiledLayer(
       jobId,
@@ -210,6 +211,7 @@ function createLayerWMS(jobId, layerSpec, rootFrameState) {
         url: layerSpec.url,
         params: getWMSParams(layerSpec),
         transition: 0,
+        projection,
       }),
       rootFrameState,
       layerSpec.opacity
@@ -233,6 +235,7 @@ function createLayerWMS(jobId, layerSpec, rootFrameState) {
     url: layerSpec.url,
     params: getWMSParams(layerSpec),
     ratio: 1,
+    projection,
   });
   layer = new ImageLayer({
     source,
